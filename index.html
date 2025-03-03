@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>User Panel</title>
     <style>
         /* General Styles */
         body {
@@ -12,6 +12,43 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+        }
+
+        /* Login Container */
+        .login-container {
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #e2136e;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background-color: #c5115e;
         }
 
         /* Dashboard Styles */
@@ -50,55 +87,42 @@
 </head>
 
 <body>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-container">
+        <h2>User Login</h2>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" placeholder="Enter username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Enter password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <p id="loginStatus"></p>
+    </div>
+
     <!-- Dashboard Page -->
-    <div id="dashboardPage" class="dashboard">
-        <h2>Welcome, Admin!</h2>
-        <p>This is the admin dashboard. You can manage users, orders, and settings.</p>
-        <a href="#" onclick="showPage('usersPage')">Manage Users</a> | 
-        <a href="#" onclick="showPage('ordersPage')">Manage Orders</a> | 
-        <a href="#" onclick="showPage('settingsPage')">Settings</a> | 
+    <div id="bkash.html" class="dashboard" style="display: none;">
+        <h2>Welcome, User!</h2>
+        <p>This is your dashboard. You can view your profile and orders.</p>
+        <a href="#" onclick="showPage('profilePage')">Profile</a> | 
+        <a href="#" onclick="showPage('ordersPage')">Orders</a> | 
         <a href="#" onclick="logout()">Logout</a>
     </div>
 
-    <!-- Users Page -->
-    <div id="usersPage" class="dashboard" style="display: none;">
-        <h2>Manage Users</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>user1</td>
-                    <td>user1@example.com</td>
-                    <td>
-                        <button>Edit</button>
-                        <button>Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>user2</td>
-                    <td>user2@example.com</td>
-                    <td>
-                        <button>Edit</button>
-                        <button>Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Profile Page -->
+    <div id="profilePage" class="dashboard" style="display: none;">
+        <h2>User Profile</h2>
+        <p>Name: John Doe</p>
+        <p>Email: john@example.com</p>
+        <p>Phone: 0123456789</p>
         <a href="#" onclick="showPage('dashboardPage')">Back to Dashboard</a>
     </div>
 
     <!-- Orders Page -->
     <div id="ordersPage" class="dashboard" style="display: none;">
-        <h2>Manage Orders</h2>
+        <h2>Your Orders</h2>
         <table>
             <thead>
                 <tr>
@@ -123,30 +147,39 @@
                 </tr>
             </tbody>
         </table>
-        <a href="#" onclick="showPage('dashboardPage')">Back to Dashboard</a>
-    </div>
-
-    <!-- Settings Page -->
-    <div id="settingsPage" class="dashboard" style="display: none;">
-        <h2>Settings</h2>
-        <p>Configure your admin panel settings here.</p>
-        <a href="#" onclick="showPage('dashboardPage')">Back to Dashboard</a>
+        <a href="#" onclick="showPage('#')">Back to Dashboard</a>
     </div>
 
     <script>
         // Show a specific page and hide others
         function showPage(pageId) {
-            document.getElementById('dashboardPage').style.display = 'none';
-            document.getElementById('usersPage').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('bkash.html').style.display = 'none';
+            document.getElementById('profilePage').style.display = 'none';
             document.getElementById('ordersPage').style.display = 'none';
-            document.getElementById('settingsPage').style.display = 'none';
             document.getElementById(pageId).style.display = 'block';
         }
 
         // Logout function
         function logout() {
-            window.location.href = 'user-panel.html'; // Redirect to user login page
+            showPage('loginPage');
+            document.getElementById('loginStatus').textContent = '';
         }
+
+        // Login form submission
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Mock login validation
+            if (username === 'user' && password === '1234') {
+                showPage('bkash.html');
+            } else {
+                document.getElementById('loginStatus').textContent = 'Invalid username or password!';
+                document.getElementById('loginStatus').style.color = 'red';
+            }
+        });
     </script>
 </body>
 
