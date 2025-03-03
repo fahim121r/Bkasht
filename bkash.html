@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bKash Payment Gateway</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .payment-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 400px;
+        }
+
+        .bkash-logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #e2136e;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin: 10px 0 5px;
+            text-align: left;
+        }
+
+        input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #e2136e;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #c5115e;
+        }
+
+        #paymentStatus {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="payment-container">
+        <h2>bKash Payment Gateway</h2>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/BKash_Logo.svg/1200px-BKash_Logo.svg.png" alt="bKash Logo" class="bkash-logo">
+
+        <form id="bkashPaymentForm">
+            <label for="bkashNumber">bKash Number:</label>
+            <input type="text" id="bkashNumber" placeholder="01XXXXXXXXX" required>
+
+            <label for="amount">Amount (BDT):</label>
+            <input type="number" id="amount" placeholder="Enter amount" required>
+
+            <label for="transactionId">Transaction ID:</label>
+            <input type="text" id="transactionId" placeholder="Enter Transaction ID" required>
+
+            <button type="submit">Confirm Payment</button>
+        </form>
+
+        <div id="paymentStatus"></div>
+    </div>
+
+    <script>
+        document.getElementById("bkashPaymentForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const bkashNumber = document.getElementById("bkashNumber").value.trim();
+            const amount = document.getElementById("amount").value.trim();
+            const transactionId = document.getElementById("transactionId").value.trim();
+            const paymentStatus = document.getElementById("paymentStatus");
+
+            // Simple Validation
+            if (bkashNumber.length !== 11 || isNaN(bkashNumber)) {
+                paymentStatus.textContent = "Invalid bKash number!";
+                paymentStatus.style.color = "red";
+                return;
+            }
+            if (amount <= 0) {
+                paymentStatus.textContent = "Enter a valid amount!";
+                paymentStatus.style.color = "red";
+                return;
+            }
+            if (transactionId.length < 5) {
+                paymentStatus.textContent = "Invalid transaction ID!";
+                paymentStatus.style.color = "red";
+                return;
+            }
+
+            // Payment Confirmation (Mockup)
+            paymentStatus.textContent = "Processing payment...";
+            paymentStatus.style.color = "orange";
+
+            setTimeout(() => {
+                paymentStatus.textContent = "Payment successful! Thank you.";
+                paymentStatus.style.color = "green";
+            }, 2000);
+        });
+    </script>
+
+</body>
+
+</html>
